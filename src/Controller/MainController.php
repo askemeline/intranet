@@ -13,11 +13,14 @@ class MainController extends AbstractController
     public function index()
     {
         if ($this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY')){
-
-        return $this->render('security/login.html.twig', [
-            'controller_name' => 'MainController',
-        ]);
-        }else{
+            return $this->render('security/login.html.twig', [
+                'controller_name' => 'MainController',
+            ]);
+        }
+        else if($this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('easyadmin');
+        }
+        else{
             return $this->render('main/index.html.twig', [
                 'controller_name' => 'MainController',
             ]);
