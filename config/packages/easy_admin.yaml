@@ -24,7 +24,7 @@ easy_admin:
     Students:
       class: App\Entity\User
       list:
-        dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
+        dql_filter: "entity.roles LIKE '%%[]%%'"
         fields:
           - email
           - firstname
