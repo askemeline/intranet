@@ -1,7 +1,11 @@
 easy_admin:
-  site_name: 'Intranet'
+  site_name: 'Intranet ADMIN'
+  design:
+    menu:
+      - label: 'Users'
+        children: ['All','Students', 'Teachers']
   entities:
-    User:
+    All:
       class: App\Entity\User
       list:
         fields:
@@ -11,9 +15,25 @@ easy_admin:
           - roles
       form:
         fields:
-          - id
           - email
           - firstname
           - lastname
           # if administrators are allowed to edit users' passwords and roles, add this:
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_STUDENT': 'ROLE_STUDENT', 'ROLE_ADMIN': 'ROLE_ADMIN','ROLE_TEACHER':'ROLE_TEACHER' } } }
+
+    Students:
+      class: App\Entity\User
+      list:
+        dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
+        fields:
+          - email
+          - firstname
+          - lastname
+    Teachers:
+      class: App\Entity\User
+      list:
+        dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
+        fields:
+          - email
+          - firstname
+          - lastname
