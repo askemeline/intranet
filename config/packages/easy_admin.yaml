@@ -2,22 +2,39 @@ easy_admin:
   site_name: 'Intranet ADMIN'
   design:
     menu:
+      - 'Discipline'
       - label: 'Users'
         children: ['All','Students', 'Teachers']
   entities:
+    Discipline:
+      disabled_actions: ['show',  'search']
+      class: App\Entity\Discipline
+      list:
+        fields:
+          - discipline
+         # - { property: 'user', type: 'json_array'}
+      form:
+        fields:
+         # - user
+          - discipline
+         # - grade
     All:
       class: App\Entity\User
+
       list:
         fields:
           - email
           - firstname
           - lastname
           - roles
+          - { property: 'disciplines', type: 'json_array' }
       form:
         fields:
           - email
           - firstname
           - lastname
+          - { property: 'disciplines', type_options: { 'by_reference': false } }
+
           # if administrators are allowed to edit users' passwords and roles, add this:
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_STUDENT': 'ROLE_STUDENT', 'ROLE_ADMIN': 'ROLE_ADMIN','ROLE_TEACHER':'ROLE_TEACHER' } } }
 
@@ -29,6 +46,15 @@ easy_admin:
           - email
           - firstname
           - lastname
+          - { property: 'disciplines', type: 'json_array'}
+      form:
+        fields:
+          - email
+          - firstname
+          - lastname
+          - { property: 'disciplines', type_options: { 'by_reference': false } }
+          # - { property: 'disciplines', type: 'json_array'}
+         # - { property: 'grades', type: 'json_array'}
     Teachers:
       class: App\Entity\User
       list:
@@ -37,3 +63,10 @@ easy_admin:
           - email
           - firstname
           - lastname
+          - { property: 'disciplines', type: 'json_array' }
+      form:
+        fields:
+          - email
+          - firstname
+          - lastname
+          - { property: 'disciplines', type_options: { 'by_reference': false } }

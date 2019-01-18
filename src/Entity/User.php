@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -48,6 +50,13 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Discipline", mappedBy="user")
+     */
+    private $disciplines;
+
+
 
     public function getId(): ?int
     {
@@ -149,5 +158,38 @@ class User implements UserInterface
         $this->lastname = $lastname;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Discipline[]
+     */
+    public function getDisciplines(): Collection
+    {
+        return $this->disciplines;
+    }
+
+    public function addDiscipline(Discipline $discipline): self
+    {
+        if (!$this->disciplines->contains($discipline)) {
+            $this->disciplines[] = $discipline;
+            $discipline->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscipline(Discipline $discipline): self
+    {
+        if ($this->disciplines->contains($discipline)) {
+            $this->disciplines->removeElement($discipline);
+            $discipline->removeUser($this);
+        }
+
+        return $this;
+    }
+
+
+    public function __toString() {
+        return (string) $this->firstname;
     }
 }
