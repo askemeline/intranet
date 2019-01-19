@@ -3,7 +3,7 @@
 {% block title %}Hello{% endblock %}
 
 {% block body %}
-
+    {% if is_granted('ROLE_ADMIN') %}
         User: {{ user.firstname }} {{ user.lastname }} {{ user.roles[0] }}<br><br>
        All Disciplines:
         <br>
@@ -16,14 +16,22 @@
         {% for disciplines_users in disciplines_user %}
         {{ disciplines_users }}<br>
         {% endfor %}
-<br>
-    Your notes
-    <br>
+        <br>
+        Your notes
+        <br>
         {% if note is not null %}
             {% for notes in note %}
                 {{ notes }}
             {% endfor %}
+        {% else %}
+        <p>pas de note pour le moment</p>
+        {% endif %}
+
     {% else %}
-    <p>pas de note pour le moment</p>
+        Dicipline(s) : <br>
+    {% for disciplines_users in disciplines_user %}
+        {{ disciplines_users }}<br>
+    {% endfor %}
     {% endif %}
+
 {% endblock %}

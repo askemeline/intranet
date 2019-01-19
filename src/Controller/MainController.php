@@ -35,7 +35,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('easyadmin');
         }
 
-        else if ($this->isGranted('ROLE_USER')&& !$this->isGranted('ROLE_ADMIN')) {
+        else if ($this->isGranted('ROLE_USER')&& !$this->isGranted('ROLE_ADMIN')&& !$this->isGranted('ROLE_TEACHER')) {
             $user = $this->getUser();
             $disciplines = $discipline->findAll();
             $disciplines_user = $user->getDisciplines();
@@ -49,12 +49,12 @@ class MainController extends AbstractController
             ]);
         }
         else{
+            $user = $this->getUser();
+            $disciplines_user = $user->getDisciplines();
             return $this->render('main/index.html.twig', [
                 'controller_name' => 'MainController',
+                'disciplines_user' => $disciplines_user,
             ]);
         }
-
     }
-
-
 }

@@ -9,7 +9,7 @@ easy_admin:
       - 'Note'
   entities:
     All:
-      disabled_actions: ['add']
+      disabled_actions: ['new']
       class: App\Entity\User
       list:
         fields:
@@ -29,7 +29,7 @@ easy_admin:
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN','ROLE_TEACHER':'ROLE_TEACHER' } } }
 
     Students:
-      disabled_actions: ['add']
+      disabled_actions: ['new']
       class: App\Entity\User
       list:
         dql_filter: "entity.roles LIKE '%%[]%%'"
@@ -47,22 +47,23 @@ easy_admin:
           # - { property: 'disciplines', type: 'json_array'}
           # - { property: 'grades', type: 'json_array'}
     Teachers:
+      disabled_actions: ['new']
       class: App\Entity\User
-      disabled_actions: ['add']
       list:
-        dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
+        dql_filter: "entity.roles LIKE '%%[]%%'"
         fields:
           - email
           - firstname
           - lastname
-          - { property: 'disciplines', type: 'json_array' }
-        form:
-          fields:
-            - email
-            - firstname
-            - lastname
-            - { property: 'disciplines', type_options: { 'by_reference': false } }
-
+          - { property: 'disciplines', type: 'json_array'}
+      form:
+        fields:
+          - email
+          - firstname
+          - lastname
+          - { property: 'disciplines', type_options: { 'by_reference': false } }
+          # - { property: 'disciplines', type: 'json_array'}
+          # - { property: 'grades', type: 'json_array'}
     Discipline:
       #disabled_actions: ['show',  'search']
       class: App\Entity\Discipline
