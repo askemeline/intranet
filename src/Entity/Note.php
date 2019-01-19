@@ -109,4 +109,7 @@ class Note
 
         return $this;
     }
+    public function __toString() {
+        return (string) $this->note;
+    }
 }

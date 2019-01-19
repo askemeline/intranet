@@ -3,9 +3,27 @@
 {% block title %}Hello{% endblock %}
 
 {% block body %}
-    <div>
-    {% if app.user  %}
 
-        </div>
+        User: {{ user.firstname }} {{ user.lastname }} {{ user.roles[0] }}<br><br>
+       All Disciplines:
+        <br>
+        {% for discipline in disciplines %}
+        {{ discipline }}<br>
+        {% endfor %}
+        <br>
+        Your Disciplines:
+        <br>
+        {% for disciplines_users in disciplines_user %}
+        {{ disciplines_users }}<br>
+        {% endfor %}
+<br>
+    Your notes
+    <br>
+        {% if note is not null %}
+            {% for notes in note %}
+                {{ notes }}
+            {% endfor %}
+    {% else %}
+    <p>pas de note pour le moment</p>
     {% endif %}
 {% endblock %}
