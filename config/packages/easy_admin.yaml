@@ -12,13 +12,13 @@ easy_admin:
       list:
         fields:
           - discipline
-          - { property: 'user', type: 'json_array'}
+         # - { property: 'user', type: 'json_array'}
       form:
                #dql_filter: "entity.roles NOT LIKE '%%env(ROLE_ADMIN)%%'"
-        dql_filter: "entity.roles LIKE '%%['ROLE_ADMIN']%%'"
+        #dql_filter: "entity.roles LIKE '%%['ROLE_ADMIN']%%'"
         #dql_filter: "entity.roles LIKE '%%env(ROLE_ADMIN)%%'"
         fields:
-          - user
+         # - user
           - discipline
          # - grade
     All:
