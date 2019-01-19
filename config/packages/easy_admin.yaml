@@ -31,7 +31,6 @@ easy_admin:
          # - grade
     All:
       class: App\Entity\User
-
       list:
         fields:
           - email
@@ -47,7 +46,7 @@ easy_admin:
           - { property: 'disciplines', type_options: { 'by_reference': false } }
 
           # if administrators are allowed to edit users' passwords and roles, add this:
-          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_STUDENT': 'ROLE_STUDENT', 'ROLE_ADMIN': 'ROLE_ADMIN','ROLE_TEACHER':'ROLE_TEACHER' } } }
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN','ROLE_TEACHER':'ROLE_TEACHER' } } }
 
     Students:
       class: App\Entity\User
