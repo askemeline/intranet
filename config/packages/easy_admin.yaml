@@ -2,10 +2,18 @@ easy_admin:
   site_name: 'Intranet ADMIN'
   design:
     menu:
+      - 'Note'
       - 'Discipline'
       - label: 'Users'
         children: ['All','Students', 'Teachers']
   entities:
+    Note:
+      class: App\Entity\Note
+      list:
+        fields:
+          - note
+          - { property: 'discipline', type: 'json_array'}
+          - { property: 'user', type: 'json_array'}
     Discipline:
       disabled_actions: ['show',  'search']
       class: App\Entity\Discipline

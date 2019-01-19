@@ -56,6 +56,16 @@ class User implements UserInterface
      */
     private $disciplines;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Note", mappedBy="user")
+     */
+    private $notes;
+
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+    }
+
 
 
     public function getId(): ?int
@@ -207,6 +217,34 @@ class User implements UserInterface
                 foreach ($result as $child) {
                     $childNameList[] = $child;
                 }
-                return sprintf('%s [%s]', $this->firstname, implode(', ', $childNameList));
+                return sprintf('%s [%s]', $this->firstname. ' ' .$this->lastname, implode(', ', $childNameList));
             }
+
+        /**
+         * @return Collection|Note[]
+         */
+        public function getNotes(): Collection
+        {
+            return $this->notes;
+        }
+
+        public function addNote(Note $note): self
+        {
+            if (!$this->notes->contains($note)) {
+                $this->notes[] = $note;
+                $note->addUser($this);
+            }
+
+            return $this;
+        }
+
+        public function removeNote(Note $note): self
+        {
+            if ($this->notes->contains($note)) {
+                $this->notes->removeElement($note);
+                $note->removeUser($this);
+            }
+
+            return $this;
+        }
 }
