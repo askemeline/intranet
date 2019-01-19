@@ -10,12 +10,13 @@ easy_admin:
       disabled_actions: ['show',  'search']
       class: App\Entity\Discipline
       list:
-        #dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
         fields:
           - discipline
           - { property: 'user', type: 'json_array'}
       form:
-        #dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
+               #dql_filter: "entity.roles NOT LIKE '%%env(ROLE_ADMIN)%%'"
+        dql_filter: "entity.roles LIKE '%%['ROLE_ADMIN']%%'"
+        #dql_filter: "entity.roles LIKE '%%env(ROLE_ADMIN)%%'"
         fields:
           - user
           - discipline

@@ -189,7 +189,24 @@ class User implements UserInterface
     }
 
 
-    public function __toString() {
-        return (string) $this->firstname;
-    }
+/*    public function __toString() {
+        $output = '';
+
+        foreach($this->roles as $script){
+            $output .= $this->firstname.' '.$script;
+        }
+        /*dump($output);die;
+        return $output;
+
+    }*/
+    public function __toString()
+    {
+            $result  = $this->roles;
+
+            $childNameList = array();
+            foreach ($result as $child) {
+                $childNameList[] = $child;
+            }
+            return sprintf('%s [%s]', $this->firstname, implode(', ', $childNameList));
+        }
 }
