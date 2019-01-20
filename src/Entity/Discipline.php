@@ -35,12 +35,18 @@ class Discipline
      */
     private $notes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="discipline")
+     */
+    private $users;
+
 
 
     public function __construct()
     {
         $this->user = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,15 +91,15 @@ class Discipline
 
         return $this;
     }
-/*    public function __toString()
-    {
-        $output = '';
-        foreach($this->discipline as $script){
-            $output .= ' '.$script;
-        }
-        return $output;
+    /*    public function __toString()
+        {
+            $output = '';
+            foreach($this->discipline as $script){
+                $output .= ' '.$script;
+            }
+            return $output;
 
-    }*/
+        }*/
     /*dump($output);die;*/
     public function __toString() {
         return (string) $this->discipline;
@@ -125,5 +131,13 @@ class Discipline
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
     }
 }

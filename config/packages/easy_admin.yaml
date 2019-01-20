@@ -5,8 +5,9 @@ easy_admin:
       - label: 'Users'
         icon: 'users'
         children: ['All','Students', 'Teachers']
-      - 'Discipline'
-      - 'Note'
+      - label: 'Discipline'
+        children: ['Disciplines', 'Disciplinary']
+      - 'Notes'
   entities:
     All:
       disabled_actions: ['new']
@@ -43,14 +44,14 @@ easy_admin:
           - email
           - firstname
           - lastname
-          - { property: 'disciplines', type_options: { 'by_reference': false } }
+          #- { property: 'disciplines', type_options: { 'by_reference': false } }
           # - { property: 'disciplines', type: 'json_array'}
           # - { property: 'grades', type: 'json_array'}
     Teachers:
       disabled_actions: ['new']
       class: App\Entity\User
       list:
-        dql_filter: "entity.roles LIKE '%%[]%%'"
+        dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
         fields:
           - email
           - firstname
@@ -61,25 +62,34 @@ easy_admin:
           - email
           - firstname
           - lastname
-          - { property: 'disciplines', type_options: { 'by_reference': false } }
+          #- { property: 'disciplines', type_options: { 'by_reference': false } }
           # - { property: 'disciplines', type: 'json_array'}
           # - { property: 'grades', type: 'json_array'}
-    Discipline:
+    Disciplines:
       #disabled_actions: ['show',  'search']
       class: App\Entity\Discipline
       list:
         fields:
           - discipline
-         # - { property: 'user', type: 'json_array'}
+          # - { property: 'user', type: 'json_array'}
       form:
-               #dql_filter: "entity.roles NOT LIKE '%%env(ROLE_ADMIN)%%'"
-        #dql_filter: "entity.roles LIKE '%%['ROLE_ADMIN']%%'"
-        #dql_filter: "entity.roles LIKE '%%env(ROLE_ADMIN)%%'"
         fields:
-         # - user
           - discipline
-         # - grade
-    Note:
+    Disciplinary:
+      class: App\Entity\User
+      disabled_actions: ['new']
+      list:
+        dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
+        fields:
+          - discipline
+          - firstname
+          - lastname
+      form:
+        fields:
+          - discipline
+          - firstname
+          - lastname
+    Notes:
       class: App\Entity\Note
       list:
         fields:

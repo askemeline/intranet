@@ -9,11 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * @UniqueEntity("discipline")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(
- * fields={"email"},
- * message= "L'email que vous avez indiqué est déjà utilisé"
- * )
  */
 class User implements UserInterface
 {
@@ -60,6 +57,11 @@ class User implements UserInterface
      * @ORM\ManyToMany(targetEntity="App\Entity\Note", mappedBy="user")
      */
     private $notes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Discipline", inversedBy="users")
+     */
+    private $discipline;
 
     public function __construct()
     {
@@ -199,52 +201,64 @@ class User implements UserInterface
     }
 
 
-/*    public function __toString() {
-        $output = '';
+    /*    public function __toString() {
+            $output = '';
 
-        foreach($this->roles as $script){
-            $output .= $this->firstname.' '.$script;
-        }
-        /*dump($output);die;
-        return $output;
-
-    }*/
-        public function __toString()
-        {
-                $result  = $this->roles;
-
-                $childNameList = array();
-                foreach ($result as $child) {
-                    $childNameList[] = $child;
-                }
-                return sprintf('%s [%s]', $this->firstname. ' ' .$this->lastname, implode(', ', $childNameList));
+            foreach($this->roles as $script){
+                $output .= $this->firstname.' '.$script;
             }
+            /*dump($output);die;
+            return $output;
 
-        /**
-         * @return Collection|Note[]
-         */
-        public function getNotes(): Collection
-        {
-            return $this->notes;
+        }*/
+    public function __toString()
+    {
+        $result  = $this->roles;
+
+        $childNameList = array();
+        foreach ($result as $child) {
+            $childNameList[] = $child;
+        }
+        return sprintf('%s [%s]', $this->firstname. ' ' .$this->lastname, implode(', ', $childNameList));
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->addUser($this);
         }
 
-        public function addNote(Note $note): self
-        {
-            if (!$this->notes->contains($note)) {
-                $this->notes[] = $note;
-                $note->addUser($this);
-            }
+        return $this;
+    }
 
-            return $this;
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->contains($note)) {
+            $this->notes->removeElement($note);
+            $note->removeUser($this);
         }
 
-        public function removeNote(Note $note): self
-        {
-            if ($this->notes->contains($note)) {
-                $this->notes->removeElement($note);
-                $note->removeUser($this);
-            }
+        return $this;
+    }
 
-            return $this;
-        }
+    public function getDiscipline(): ?Discipline
+    {
+        return $this->discipline;
+    }
+
+    public function setDiscipline(?Discipline $discipline): self
+    {
+        $this->discipline = $discipline;
+
+        return $this;
+    }
 }
