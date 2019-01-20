@@ -17,11 +17,9 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 .idea
-src/Entity/Discipline.php
 src/Migrations/Version20190118222912.php
 src/Migrations/Version20190118223846.php
 src/Migrations/Version20190118234245.php
 src/Migrations/Version20190118234511.php
-src/Repository/DisciplineRepository.php
 Version20190119123433.php
 Version20190119130258.php
