@@ -211,16 +211,6 @@ class User implements UserInterface
             return $output;
 
         }*/
-    public function __toString()
-    {
-        $result  = $this->roles;
-
-        $childNameList = array();
-        foreach ($result as $child) {
-            $childNameList[] = $child;
-        }
-        return sprintf('%s [%s]', $this->firstname. ' ' .$this->lastname, implode(', ', $childNameList));
-    }
 
     /**
      * @return Collection|Note[]
@@ -260,5 +250,9 @@ class User implements UserInterface
         $this->discipline = $discipline;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return (string) $this->firstname. ' ' .$this->lastname;
     }
 }
