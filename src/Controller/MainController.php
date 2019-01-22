@@ -2,24 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Discipline;
 use App\Repository\NoteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\DisciplineRepository;
 use App\Repository\UserRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 
 
 class MainController extends AbstractController
 {
-
-    public function adminDashboard()
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        // ...
-    }
-
 
     /**
      * @Route("/", name="main")
@@ -56,5 +50,22 @@ class MainController extends AbstractController
                 'disciplines_user' => $disciplines_user,
             ]);
         }
+    }
+
+
+    /**
+     * @Route("/discipline/{id}/", name="discipline")
+     */
+    public function discipline(Request $request, ObjectManager $manager,DisciplineRepository $discipline,$id=null)
+    {
+
+        if ($this->isGranted('ROLE_USER')&& !$this->isGranted('ROLE_ADMIN')&& !$this->isGranted('ROLE_TEACHER')) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
+            $discipline = $this->getDoctrine()->getRepository(Discipline::class)->find($id);
+            $user->addDiscipline($discipline);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('main');
     }
 }

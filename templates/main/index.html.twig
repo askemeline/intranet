@@ -3,35 +3,46 @@
 {% block title %}Hello{% endblock %}
 
 {% block body %}
-    {% if is_granted('ROLE_ADMIN') %}
-        User: {{ user.firstname }} {{ user.lastname }} {{ user.roles[0] }}<br><br>
-       All Disciplines:
-        <br>
-        {% for discipline in disciplines %}
-        {{ discipline }}<br>
+        User: {{ user.firstname }} {{ user.lastname }}
+    {% if is_granted('ROLE_TEACHER')%}
+        TEACHER Dicipline(s) : <br><br>
+        {% if disciplines_user is empty %}
+            Not discipline  for the moment
+        {% else %}
+        {% for disciplines_users in disciplines_user %}
+            <br>{{ disciplines_users }}<br>
         {% endfor %}
+            {% endif %}
+    {% else %}
+        <br><br>
+        REGISTER DISCIPLINE:
+        {% if disciplines is empty %}
+            Not discipline register for the moment
+        {% else %}
+        <br>{% for discipline in disciplines %}
+        <a href="{{ path('discipline',{'id':discipline.id}) }}"> {{ discipline }}<br></a>
+            {% endfor %}
+         {% endif %}
+        <br>
+        All Disciplines:<br>
+        {% if disciplines is empty %}
+            Not discipline  for the moment
+        {% else %}
+        {% for discipline in disciplines %}
+            {{ discipline }}<br>
+        {% endfor %}
+            {% endif %}
         <br>
         Your Disciplines:
         <br>
-        {% for disciplines_users in disciplines_user %}
-        {{ disciplines_users }}<br>
-        {% endfor %}
-        <br>
-        Your notes
-        <br>
-        {% if note is not null %}
-            {% for notes in note %}
-                {{ notes }}
+        {% if disciplines_user is empty %}
+            Not discipline for the moment
+            {% else %}
+            {% for disciplines_users in disciplines_user %}
+                    {{ disciplines_users }}<br>
             {% endfor %}
-        {% else %}
-        <p>pas de note pour le moment</p>
-        {% endif %}
+            {% endif %}
 
-    {% else %}
-        Dicipline(s) : <br>
-    {% for disciplines_users in disciplines_user %}
-        {{ disciplines_users }}<br>
-    {% endfor %}
     {% endif %}
 
 {% endblock %}
