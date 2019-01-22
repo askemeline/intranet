@@ -59,7 +59,7 @@ easy_admin:
           - email
           - firstname
           - lastname
-          - { property: 'disciplines', type: 'json_array'}
+          - discipline
       form:
         fields:
           - email

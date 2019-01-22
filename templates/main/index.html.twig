@@ -3,7 +3,6 @@
 {% block title %}Hello{% endblock %}
 
 {% block body %}
-        User: {{ user.firstname }} {{ user.lastname }}
     {% if is_granted('ROLE_TEACHER')%}
         TEACHER Dicipline(s) : <br><br>
         {% if disciplines_user is empty %}
