@@ -12,16 +12,18 @@
                 {{ discipline_teachers }}<br>
             {% endfor %}
         {% endif %}
-        STUDENT REGISTER TO YOUR DISCIPLINE:<br>
-        {% for discipline_teachers in discipline_teacher %}
+       <br> STUDENT REGISTER TO YOUR DISCIPLINE:<br>
+{#        {% for discipline_teachers in discipline_teacher %}
             {{ discipline_teachers }}<br>
-        {% endfor %}
-        {% for student_registers in student_register %}
-            {{ student_registers }}<br>
-        {% endfor %}
-        {% for student_users in student_user %}
-            {{ student_users }}<br>
-        {% endfor %}
+        {% endfor %}#}
+
+          {% for letss in lets %}
+                {{ letss.firstname }}<br>
+                {{ letss.discipline }}<br>
+            {% endfor %}
+        {{ dump(student) }}
+
+
 
 
     {% else %}
@@ -60,6 +62,13 @@
             {{ notes }}/20<br>
         {% endfor %}
 
-    {% endif %}
+        <br>GENERAL GRADE:<br>
+        {% set sum = 0 %}
+        {% for notes in note %}
+            {% set sum = sum + notes |trim %}
+        {% endfor %}
+        {{ sum / note|length }} /20
 
+    {% endif %}
+<br><br>
 {% endblock %}

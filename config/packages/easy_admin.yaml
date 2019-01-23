@@ -8,11 +8,7 @@ easy_admin:
           - { label: 'Users', entity: 'All'}
           - 'Students'
           - 'Teachers'
-      - label: 'Discipline'
-        children:
-          - 'Disciplines'
-          - { label: 'Disciplinary teacher', entity: 'Disciplinary'}
-          - { label: 'Students discipline', entity: 'Students_discipline'}
+      - 'Disciplines'
       - 'Notes'
   entities:
     All:
@@ -47,7 +43,7 @@ easy_admin:
           - email
           - firstname
           - lastname
-          - { property: 'disciplines', type_options: { 'by_reference': false } }
+          #- { property: 'disciplines', type_options: { 'by_reference': false } }
           # - { property: 'disciplines', type: 'json_array'}
           # - { property: 'grades', type: 'json_array'}
     Teachers:
@@ -76,41 +72,9 @@ easy_admin:
       list:
         fields:
           - discipline
-          # - { property: 'user', type: 'json_array'}
       form:
         fields:
           - discipline
-    Disciplinary:
-      class: App\Entity\User
-      disabled_actions: ['new','show']
-      list:
-        dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
-        fields:
-          - { property: 'disciplines', type_options: { 'by_reference': false } }
-          - firstname
-          - lastname
-      form:
-        fields:
-          - disciplines
-          - firstname
-          - lastname
-    Students_discipline:
-      class: App\Entity\User
-      disabled_actions: ['new','show']
-      list:
-        title: 'Students discipline'
-        dql_filter: "entity.roles LIKE '%%[]%%'"
-        fields:
-          - discipline
-          - firstname
-          - lastname
-          - { property: 'notes', type: 'json_array'}
-      form:
-        dql_filter: "entity.roles LIKE '%%[]%%'"
-        fields:
-          - discipline
-          - firstname
-          - lastname
     Notes:
       disabled_actions: ['show']
       class: App\Entity\Note
