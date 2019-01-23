@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NoteRepository")
@@ -17,6 +19,7 @@ class Note
     private $id;
 
     /**
+     * @Assert\LessThanOrEqual(20)
      * @ORM\Column(type="float")
      */
     private $note;
