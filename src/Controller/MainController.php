@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Discipline;
-use App\Entity\Note;
-use App\Repository\NoteRepository;
+/*use App\Entity\Note;*/
+/*use App\Repository\NoteRepository;*/
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\DisciplineRepository;
@@ -18,7 +18,7 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="main")
      */
-    public function index(UserRepository $users, DisciplineRepository $discipline, NoteRepository $note, ObjectManager $manager)
+    public function index(UserRepository $users, DisciplineRepository $discipline, ObjectManager $manager)
     {
         if ($this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY')){
             return $this->render('security/login.html.twig', [

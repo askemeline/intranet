@@ -54,21 +54,19 @@ class User implements UserInterface
     private $disciplines;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Note", mappedBy="user")
-     */
-    private $notes;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Discipline", inversedBy="users")
      */
     private $discipline;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="user")
+     */
+    private $notes;
 
     public function __construct()
     {
         $this->notes = new ArrayCollection();
     }
-
-
 
     public function getId(): ?int
     {
@@ -212,33 +210,6 @@ class User implements UserInterface
 
         }*/
 
-    /**
-     * @return Collection|Note[]
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
-
-    public function addNote(Note $note): self
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes[] = $note;
-            $note->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(Note $note): self
-    {
-        if ($this->notes->contains($note)) {
-            $this->notes->removeElement($note);
-            $note->removeUser($this);
-        }
-
-        return $this;
-    }
 
     public function getDiscipline(): ?Discipline
     {
@@ -255,4 +226,36 @@ class User implements UserInterface
     {
         return (string) $this->firstname. ' ' .$this->lastname;
     }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->contains($note)) {
+            $this->notes->removeElement($note);
+            // set the owning side to null (unless already changed)
+            if ($note->getUser() === $this) {
+                $note->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

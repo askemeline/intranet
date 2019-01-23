@@ -2,10 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NoteRepository")
@@ -20,26 +17,26 @@ class Note
     private $id;
 
     /**
-     * @Assert\LessThanOrEqual(20)
      * @ORM\Column(type="float")
      */
     private $note;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="notes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="notes")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Discipline", inversedBy="notes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Discipline", inversedBy="notes")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $discipline;
 
-    public function __construct()
-    {
-        $this->user = new ArrayCollection();
-        $this->discipline = new ArrayCollection();
-    }
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $comment;
 
     public function getId(): ?int
     {
@@ -58,58 +55,39 @@ class Note
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUser(): Collection
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function addUser(User $user): self
+    public function setUser(?User $user): self
     {
-        if (!$this->user->contains($user)) {
-            $this->user[] = $user;
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeUser(User $user): self
-    {
-        if ($this->user->contains($user)) {
-            $this->user->removeElement($user);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Discipline[]
-     */
-    public function getDiscipline(): Collection
+    public function getDiscipline(): ?Discipline
     {
         return $this->discipline;
     }
 
-    public function addDiscipline(Discipline $discipline): self
+    public function setDiscipline(?Discipline $discipline): self
     {
-        if (!$this->discipline->contains($discipline)) {
-            $this->discipline[] = $discipline;
-        }
+        $this->discipline = $discipline;
 
         return $this;
     }
 
-    public function removeDiscipline(Discipline $discipline): self
+    public function getComment(): ?string
     {
-        if ($this->discipline->contains($discipline)) {
-            $this->discipline->removeElement($discipline);
-        }
+        return $this->comment;
+    }
+
+    public function setComment(string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
-    }
-    public function __toString() {
-        return (string) $this->note;
     }
 }

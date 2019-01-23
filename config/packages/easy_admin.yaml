@@ -81,5 +81,6 @@ easy_admin:
       list:
         fields:
           - note
-          - { property: 'discipline', type: 'json_array'}
-          - { property: 'user', type: 'json_array'}
+          - comment
+          - user
+          - discipline

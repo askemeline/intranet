@@ -23,3 +23,5 @@ src/Migrations/Version20190118234245.php
 src/Migrations/Version20190118234511.php
 Version20190119123433.php
 Version20190119130258.php
+Version20190123140840.php
+Version20190123141830.php

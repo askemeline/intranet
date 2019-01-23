@@ -30,23 +30,22 @@ class Discipline
      */
     private $user;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Note", mappedBy="discipline")
-     */
-    private $notes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="discipline")
      */
     private $users;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="discipline")
+     */
+    private $notes;
 
     public function __construct()
     {
         $this->user = new ArrayCollection();
-        $this->notes = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,6 +105,14 @@ class Discipline
     }
 
     /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    /**
      * @return Collection|Note[]
      */
     public function getNotes(): Collection
@@ -117,7 +124,7 @@ class Discipline
     {
         if (!$this->notes->contains($note)) {
             $this->notes[] = $note;
-            $note->addDiscipline($this);
+            $note->setDiscipline($this);
         }
 
         return $this;
@@ -127,17 +134,12 @@ class Discipline
     {
         if ($this->notes->contains($note)) {
             $this->notes->removeElement($note);
-            $note->removeDiscipline($this);
+            // set the owning side to null (unless already changed)
+            if ($note->getDiscipline() === $this) {
+                $note->setDiscipline(null);
+            }
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
     }
 }
