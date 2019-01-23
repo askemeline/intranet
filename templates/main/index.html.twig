@@ -4,14 +4,26 @@
 
 {% block body %}
     {% if is_granted('ROLE_TEACHER')%}
-        TEACHER Dicipline(s) : <br><br>
-        {% if disciplines_user is empty %}
-            Not discipline  for the moment
+        TEACHER Dicipline(s) : <br>
+        {% if discipline_teacher is empty %}
+            Not discipline for the moment
         {% else %}
-        {% for disciplines_users in disciplines_user %}
-            <br>{{ disciplines_users }}<br>
+            {% for discipline_teachers in discipline_teacher %}
+                {{ discipline_teachers }}<br>
+            {% endfor %}
+        {% endif %}
+        STUDENT REGISTER TO YOUR DISCIPLINE:<br>
+        {% for discipline_teachers in discipline_teacher %}
+            {{ discipline_teachers }}<br>
         {% endfor %}
-            {% endif %}
+        {% for student_registers in student_register %}
+            {{ student_registers }}<br>
+        {% endfor %}
+        {% for student_users in student_user %}
+            {{ student_users }}<br>
+        {% endfor %}
+
+
     {% else %}
         <br><br>
         REGISTER DISCIPLINE:
@@ -40,7 +52,13 @@
             {% for disciplines_users in disciplines_user %}
                     {{ disciplines_users }}<br>
             {% endfor %}
-            {% endif %}
+        {% endif %}
+
+
+        <br>NOTES:<br>
+        {% for notes in note %}
+            {{ notes }}/20<br>
+        {% endfor %}
 
     {% endif %}
 

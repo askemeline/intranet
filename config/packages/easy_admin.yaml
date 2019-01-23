@@ -59,13 +59,15 @@ easy_admin:
           - email
           - firstname
           - lastname
-          - discipline
+          - { property: 'disciplines', type: 'json_array'}
       form:
         fields:
           - email
           - firstname
           - lastname
-          #- { property: 'disciplines', type_options: { 'by_reference': false } }
+          - { property: 'disciplines', type_options: { 'by_reference': false } }
+
+          # - { property: 'disciplines', type_options: { 'by_reference': false } }
           # - { property: 'disciplines', type: 'json_array'}
           # - { property: 'grades', type: 'json_array'}
     Disciplines:
@@ -84,12 +86,12 @@ easy_admin:
       list:
         dql_filter: "entity.roles LIKE '%%ROLE_TEACHER%%'"
         fields:
-          - discipline
+          - { property: 'disciplines', type_options: { 'by_reference': false } }
           - firstname
           - lastname
       form:
         fields:
-          - discipline
+          - disciplines
           - firstname
           - lastname
     Students_discipline:

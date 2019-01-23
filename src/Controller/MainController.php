@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Discipline;
+use App\Entity\Note;
 use App\Repository\NoteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class MainController extends AbstractController
 {
-
     /**
      * @Route("/", name="main")
      */
@@ -44,10 +44,18 @@ class MainController extends AbstractController
         }
         else{
             $user = $this->getUser();
-            $disciplines_user = $user->getDisciplines();
+            $disciplines = $discipline->findAll();
+            $discipline_teacher = $user->getDisciplines();
+                $student_user = $user->getFirstname();
+
+                $student_register = $user->getFirstname();
             return $this->render('main/index.html.twig', [
                 'controller_name' => 'MainController',
-                'disciplines_user' => $disciplines_user,
+
+                'disciplines' => $disciplines,
+                'student_register' => $student_register,
+                'student_user' => $student_user,
+                'discipline_teacher' => $discipline_teacher
             ]);
         }
     }
