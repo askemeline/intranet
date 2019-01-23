@@ -38,7 +38,7 @@ class NoteController extends AbstractController
             $entityManager->persist($note);
             $entityManager->flush();
 
-            return $this->redirectToRoute('note_index');
+            return $this->redirectToRoute('main');
         }
 
         return $this->render('note/new.html.twig', [
