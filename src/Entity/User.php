@@ -49,12 +49,12 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Discipline", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Discipline", mappedBy="user",cascade={"remove"})
      */
     private $disciplines;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Discipline", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Discipline", inversedBy="users",cascade={"remove"})
      */
     private $discipline;
 

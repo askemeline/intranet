@@ -26,18 +26,18 @@ class Discipline
     private $discipline;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="disciplines")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="disciplines",cascade={"remove"})
      */
     private $user;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="discipline")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="discipline",cascade={"remove"})
      */
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="discipline")
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="discipline",cascade={"remove"})
      */
     private $notes;
 

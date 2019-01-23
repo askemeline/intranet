@@ -1,74 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends 'main/base_main.html.twig' %}
 
 {% block title %}Hello{% endblock %}
 
 {% block body %}
     {% if is_granted('ROLE_TEACHER')%}
-        TEACHER Dicipline(s) : <br>
+        <h1>Your discpline(s)</h1> <br>
         {% if discipline_teacher is empty %}
-            Not discipline for the moment
+            ❌  Not discipline for the moment
         {% else %}
             {% for discipline_teachers in discipline_teacher %}
-                {{ discipline_teachers }}<br>
+             🎯 {{ discipline_teachers }}<br>
             {% endfor %}
         {% endif %}
-       <br> STUDENT REGISTER TO YOUR DISCIPLINE:<br>
-{#        {% for discipline_teachers in discipline_teacher %}
-            {{ discipline_teachers }}<br>
-        {% endfor %}#}
-
-          {% for letss in lets %}
-                {{ letss.firstname }}<br>
-                {{ letss.discipline }}<br>
-            {% endfor %}
-        {{ dump(student) }}
-
-
-
 
     {% else %}
-        <br><br>
-        REGISTER DISCIPLINE:
+        <h1>All Disciplines</h1>
         {% if disciplines is empty %}
-            Not discipline register for the moment
-        {% else %}
-        <br>{% for discipline in disciplines %}
-        <a href="{{ path('discipline',{'id':discipline.id}) }}"> {{ discipline }}<br></a>
-            {% endfor %}
-         {% endif %}
-        <br>
-        All Disciplines:<br>
-        {% if disciplines is empty %}
-            Not discipline  for the moment
+            ❌  Not discipline  for the moment
         {% else %}
         {% for discipline in disciplines %}
             {{ discipline }}<br>
         {% endfor %}
             {% endif %}
+        <br><br>
+
+        <h1>Register discipline</h1>
+        {% if disciplines is empty %}
+            ❌ Not discipline register for the moment
+        {% else %}
+        {% for discipline in disciplines %}
+            👉 <a href="{{ path('discipline',{'id':discipline.id}) }}"> {{ discipline }}<br></a>
+            {% endfor %}
+         {% endif %}
         <br>
-        Your Disciplines:
-        <br>
+
+       <h1>Your Disciplines</h1>
         {% if disciplines_user is empty %}
-            Not discipline for the moment
+            ❌ Not discipline for the moment
             {% else %}
             {% for disciplines_users in disciplines_user %}
-                    {{ disciplines_users }}<br>
+                ✔️ {{ disciplines_users }}<br>
             {% endfor %}
         {% endif %}
-
-
-        <br>NOTES:<br>
-        {% for notes in note %}
-            {{ notes }}/20<br>
-        {% endfor %}
-
-        <br>GENERAL GRADE:<br>
-        {% set sum = 0 %}
-        {% for notes in note %}
-            {% set sum = sum + notes |trim %}
-        {% endfor %}
-        {{ sum / note|length }} /20
-
     {% endif %}
-<br><br>
 {% endblock %}

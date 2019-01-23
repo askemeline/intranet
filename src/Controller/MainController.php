@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Discipline;
-/*use App\Entity\Note;*/
-/*use App\Repository\NoteRepository;*/
+use App\Repository\NoteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\DisciplineRepository;
@@ -18,11 +17,10 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="main")
      */
-    public function index(UserRepository $users, DisciplineRepository $discipline, ObjectManager $manager)
+    public function index(UserRepository $users, DisciplineRepository $discipline, NoteRepository $note, ObjectManager $manager)
     {
         if ($this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY')){
             return $this->render('security/login.html.twig', [
-                'controller_name' => 'MainController',
             ]);
         }
         // IF ADMIN CONNECT REDIRECT TO ADMIN
@@ -44,6 +42,7 @@ class MainController extends AbstractController
         }
         //TEACHER
         else{
+
             $user = $this->getUser();
             $lets= $users->findAll();
             $student = $discipline->findAll();
@@ -54,10 +53,10 @@ class MainController extends AbstractController
                 'discipline_teacher' => $discipline_teacher,
                 'student' => $student,
                 'lets' => $lets,
+                'user' => $user,
             ]);
         }
     }
-
 
     /**
      * @Route("/discipline/{id}/", name="discipline")

@@ -1,0 +1,17 @@
+{% extends 'main/base_main.html.twig' %}
+
+
+{% block title %}Your Notes{% endblock %}
+
+{% block body %}
+    <h1>All notes</h1>
+    {% for notes in note %}
+        📌 {{ notes }}/20<br>
+    {% endfor %}
+    <br><br>
+    <h1>Your general note</h1>
+{% if avg is empty %}
+    No general note for the moment{% else %}
+    <p class="font-weight-normal">{{ avg }}/20 🔥</p>
+    {% endif %}
+{% endblock %}
