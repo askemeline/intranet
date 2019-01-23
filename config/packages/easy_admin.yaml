@@ -25,9 +25,7 @@ easy_admin:
           - email
           - firstname
           - lastname
-          # if administrators are allowed to edit users' passwords and roles, add this:
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN','ROLE_TEACHER':'ROLE_TEACHER' } } }
-
     Students:
       disabled_actions: ['new','show']
       class: App\Entity\User
@@ -43,9 +41,6 @@ easy_admin:
           - email
           - firstname
           - lastname
-          #- { property: 'disciplines', type_options: { 'by_reference': false } }
-          # - { property: 'disciplines', type: 'json_array'}
-          # - { property: 'grades', type: 'json_array'}
     Teachers:
       disabled_actions: ['new','show']
       class: App\Entity\User
@@ -62,10 +57,6 @@ easy_admin:
           - firstname
           - lastname
           - { property: 'disciplines', type_options: { 'by_reference': false } }
-
-          # - { property: 'disciplines', type_options: { 'by_reference': false } }
-          # - { property: 'disciplines', type: 'json_array'}
-          # - { property: 'grades', type: 'json_array'}
     Disciplines:
       disabled_actions: ['show']
       class: App\Entity\Discipline
